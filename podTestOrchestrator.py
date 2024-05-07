@@ -11,16 +11,16 @@ prometheus_url = 'http://172.165.91.160:9090'
 replica_count = 1
 
 stages = [
-    {'vus': 100, 'duration': '300s'},
-    {'vus': 250, 'duration': '300s'},
-    {'vus': 500, 'duration': '300s'},
-    {'vus': 750, 'duration': '300s'},
-    {'vus': 1000, 'duration': '300s'},
-    {'vus': 1250, 'duration': '300s'},
-    {'vus': 1500, 'duration': '300s'},
-    {'vus': 1750, 'duration': '300s'},
-    {'vus': 2000, 'duration': '300s'},
-    {'vus': 2250, 'duration': '300s'}
+    {'vus': 100, 'duration': '240s'},
+    {'vus': 250, 'duration': '240s'},
+    {'vus': 500, 'duration': '240s'},
+    {'vus': 750, 'duration': '240s'},
+    {'vus': 1000, 'duration': '240s'},
+    {'vus': 1250, 'duration': '240s'},
+    {'vus': 1500, 'duration': '240s'},
+    {'vus': 1750, 'duration': '240s'},
+    {'vus': 2000, 'duration': '240s'},
+    {'vus': 2250, 'duration': '240s'}
 ]
 
 def query_prometheus(query):
