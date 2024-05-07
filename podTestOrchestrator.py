@@ -100,7 +100,7 @@ def run_test(filepath, replica_array):
     time.sleep(600)
 
 
-with open("/directory-test.txt", 'w') as file:
+with open("directory-test.txt", 'w') as file:
             file.write("This is a test file created by Python.\n")
 
 replica_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
