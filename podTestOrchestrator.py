@@ -11,16 +11,16 @@ prometheus_url = 'http://172.165.91.160:9090'
 replica_count = 1
 
 stages = [
-    {'vus': 100, 'duration': '240s'},
-    {'vus': 250, 'duration': '240s'},
-    {'vus': 500, 'duration': '240s'},
-    {'vus': 750, 'duration': '240s'},
-    {'vus': 1000, 'duration': '240s'},
-    {'vus': 1250, 'duration': '240s'},
-    {'vus': 1500, 'duration': '240s'},
-    {'vus': 1750, 'duration': '240s'},
-    {'vus': 2000, 'duration': '240s'},
-    {'vus': 2250, 'duration': '240s'}
+    {'vus': 100, 'duration': '300s'},
+    {'vus': 250, 'duration': '300s'},
+    {'vus': 500, 'duration': '300s'},
+    {'vus': 750, 'duration': '300s'},
+    {'vus': 1000, 'duration': '300s'},
+    {'vus': 1250, 'duration': '300s'},
+    {'vus': 1500, 'duration': '300s'},
+    {'vus': 1750, 'duration': '300s'},
+    {'vus': 2000, 'duration': '300s'},
+    {'vus': 2250, 'duration': '300s'}
 ]
 
 def query_prometheus(query):
@@ -45,9 +45,24 @@ def run_stage(stage):
         result = subprocess.run(test_command, check=True, shell=True, text=True, stdout=subprocess.PIPE)
         output = result.stdout
         
-        match = re.search(r"http_req_failed[^:]*: (\d+\.\d+)%", output)
-        if match:
-            failed_rate = match.group(1)
+        fail_match = re.search(r"http_req_failed[^:]*: (\d+\.\d+)%", output)
+        reqs_match = re.search(r"http_reqs[^:]*: (\d+)", output)
+        duration_match95 = re.search(r"http_req_duration.*?p\(95\)=([^ ]*)", output) 
+        duration_match90 = re.search(r"http_req_duration.*?p\(90\)=([^ ]*)", output)   
+        if reqs_match:
+            http_reqs = reqs_match.group(1)
+            # print(f"HTTP Requests: {http_reqs}")
+        if duration_match95:
+            http_req_duration_p95 = duration_match95.group(1)
+            # print(f"HTTP Requests duration (95%): {http_req_duration_p95}")
+        if duration_match90:
+            http_req_duration_p90 = duration_match90.group(1)
+            # print(f"HTTP Requests duration (90%): {http_req_duration_p90}")
+        else:
+            print("Failed to find the HTTP request duration in the output.")
+            failed_rate = 6969
+        if fail_match:
+            failed_rate = fail_match.group(1)
             print(f"HTTP Requests Failed: {failed_rate}%")
         else:
             print("Failed to find the HTTP request failure rate in the output.")
@@ -57,7 +72,7 @@ def run_stage(stage):
         print(prometheus_pod_response)
         prometheus_node_response = query_prometheus(prometheus_node_query)
         print(prometheus_node_response)
-        return prometheus_pod_response['data']['result'][0]['value'][1], prometheus_node_response['data']['result'][0]['value'][1], failed_rate
+        return prometheus_pod_response['data']['result'][0]['value'][1], prometheus_node_response['data']['result'][0]['value'][1], failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95
     except subprocess.CalledProcessError as e:
         print(f'Error running k6 stage: {e}')
 
@@ -80,18 +95,16 @@ def run_test(filepath, replica_array):
     
 
     for stage in stages:
-        pod_response, node_response, failed_rate = run_stage(stage)
-        data_array.append([replicas, 50 * stage['vus'], pod_response, node_response, failed_rate])
+        pod_response, node_response, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95 = run_stage(stage)
+        data_array.append([replicas, stage['vus'], pod_response, node_response, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
         print("fail rate int: ", float(failed_rate))
         if float(failed_rate) > 10:
             fail_limit = True
             print(f"Failed test: {replicas} replicas {stage} stage")
-            print("1 minute cool down...")
             break
-        print("10 minute cool down...")
     print(data_array)
         
-    headers = ["replicas", "virtual users", "pod response", "node response", "failed rate"]
+    headers = ["replicas", "virtual users", "pod response", "node response", "failed rate", "http reqs", "http req duration (90%)", "http req duration (95%)"]
 
     df = pd.DataFrame(data_array, columns=headers)
     df.to_csv(file_path, index=False)
@@ -103,15 +116,16 @@ def run_test(filepath, replica_array):
 with open("directory-test.txt", 'w') as file:
             file.write("This is a test file created by Python.\n")
 
-replica_array = [2, 8]
+replica_array = [1]
 
 for replicas in replica_array:
     print("replicas: ", replicas)
     scale_deployment("teastore-webui", replicas)
     print("5 minute cool down...")
-    time.sleep(600)
+    time.sleep(300)
     file_path = f'pod_model_results_{replicas}.csv'
     run_test(file_path, replica_array) 
+
 
 
 
