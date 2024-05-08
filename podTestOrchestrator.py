@@ -81,7 +81,7 @@ def run_test(filepath, replica_array):
 
     for stage in stages:
         pod_response, node_response, failed_rate = run_stage(stage)
-        data_array.append([replicas, stage['vus'], pod_response, node_response, failed_rate])
+        data_array.append([replicas, 3 * stage['vus'], pod_response, node_response, failed_rate])
         print("fail rate int: ", float(failed_rate))
         if float(failed_rate) > 10:
             fail_limit = True
