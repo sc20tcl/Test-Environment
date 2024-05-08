@@ -116,7 +116,7 @@ def run_test(filepath, replica_array):
 with open("directory-test.txt", 'w') as file:
             file.write("This is a test file created by Python.\n")
 
-replica_array = [6]
+replica_array = [1,2,3,4,5,6,7,8,9,10]
 
 for replicas in replica_array:
     print("replicas: ", replicas)
