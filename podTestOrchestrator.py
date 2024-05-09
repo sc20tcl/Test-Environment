@@ -11,7 +11,7 @@ prometheus_url = 'http://172.165.91.160:9090'
 replica_count = 1
 
 stages = [
-    {'rate': 100, 'duration': '300s', 'preAllocatedVUs': 100, 'maxVUs': 200},
+    {'rate': 100, 'duration': '30s', 'preAllocatedVUs': 100, 'maxVUs': 200},
     {'rate': 250, 'duration': '300s', 'preAllocatedVUs': 250, 'maxVUs': 500},
     {'rate': 500, 'duration': '300s', 'preAllocatedVUs': 500, 'maxVUs': 1000},
     {'rate': 750, 'duration': '300s', 'preAllocatedVUs': 750, 'maxVUs': 1500},
