@@ -1,16 +1,22 @@
 import http from 'k6/http';
 
+let rate = __ENV.RATE || '100';  
+let duration = __ENV.DURATION || '1m'; 
+let preAllocatedVUs = __ENV.PREALLOCATED_VUS || '20';  
+let maxVUs = __ENV.MAX_VUS || '100';  
+
 export const options = {
     scenarios: {
         constant_request_rate: {
             executor: 'constant-arrival-rate',
-            rate: 100,  
-            timeUnit: '1s',  
-            duration: '10m',  
-            preAllocatedVUs: 50, 
-            maxVUs: 200,  
+            rate: parseInt(rate),  
+            timeUnit: '1s', 
+            duration: duration,
+            preAllocatedVUs: parseInt(preAllocatedVUs),  
+            maxVUs: parseInt(maxVUs),  
         }
     }
+}; }
 };
 
 
