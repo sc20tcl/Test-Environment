@@ -16,8 +16,10 @@ const urls = [
 ];
 
 export default function () {
-    const url = urls[Math.floor(Math.random() * urls.length)];
-
-    http.get(url);
+    http.get(urls[Math.floor(Math.random() * urls.length)]);
+    http.get(urls[Math.floor(Math.random() * urls.length)]);
+    http.get(urls[Math.floor(Math.random() * urls.length)]);
+    http.get(urls[Math.floor(Math.random() * urls.length)]);
+    http.get(urls[Math.floor(Math.random() * urls.length)]);
     sleep(1);
 }
