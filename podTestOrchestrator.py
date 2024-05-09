@@ -11,16 +11,16 @@ prometheus_url = 'http://172.165.91.160:9090'
 replica_count = 1
 
 stages = [
-    {'vus': 100, 'duration': '240s'},
-    {'vus': 250, 'duration': '240s'},
-    {'vus': 500, 'duration': '240s'},
-    {'vus': 750, 'duration': '240s'},
-    {'vus': 1000, 'duration': '240s'},
-    {'vus': 1250, 'duration': '240s'},
-    {'vus': 1500, 'duration': '240s'},
-    {'vus': 1750, 'duration': '240s'},
-    {'vus': 2000, 'duration': '240s'},
-    {'vus': 2250, 'duration': '240s'}
+    {'rate': 100, 'duration': '300s', 'preAllocatedVUs': 100, 'maxVUs': 200},
+    {'rate': 250, 'duration': '300s', 'preAllocatedVUs': 250, 'maxVUs': 500},
+    {'rate': 500, 'duration': '300s', 'preAllocatedVUs': 500, 'maxVUs': 1000},
+    {'rate': 750, 'duration': '300s', 'preAllocatedVUs': 750, 'maxVUs': 1500},
+    {'rate': 1000, 'duration': '300s', 'preAllocatedVUs': 1000, 'maxVUs': 2000},
+    {'rate': 1250, 'duration': '300s', 'preAllocatedVUs': 1250, 'maxVUs': 2500},
+    {'rate': 1500, 'duration': '300s', 'preAllocatedVUs': 1500, 'maxVUs': 3000},
+    {'rate': 1750, 'duration': '300s', 'preAllocatedVUs': 1750, 'maxVUs': 3500},
+    {'rate': 2000, 'duration': '300s', 'preAllocatedVUs': 2000, 'maxVUs': 4000},
+    {'rate': 2250, 'duration': '300s', 'preAllocatedVUs': 2250, 'maxVUs': 4500}
 ]
 
 def query_prometheus(query):
@@ -39,7 +39,7 @@ def query_prometheus(query):
 
 
 def run_stage(stage):
-    test_command = f"k6 run --vus {int(stage['vus']/5)} --duration {stage['duration']} ./k6Job.js"
+    test_command = f"k6 run --out csv=test_results_{stage['rate']}qps.csv -e RATE={stage['rate']} -e DURATION={stage['duration']} -e PREALLOCATED_VUS={stage['preAllocatedVUs']} -e MAX_VUS={stage['maxVUs']} ./k6Job.js"
     print(f"Running stage: {test_command}")
     try:
         result = subprocess.run(test_command, check=True, shell=True, text=True, stdout=subprocess.PIPE)
