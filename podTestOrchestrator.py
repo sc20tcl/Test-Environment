@@ -117,13 +117,13 @@ def run_test(filepath, replica_array):
 with open("directory-test.txt", 'w') as file:
             file.write("This is a test file created by Python.\n")
 
-replica_array = [1,5,9]
+replica_array = [1,2,3,4,5,6,7,8,9]
 
 for replicas in replica_array:
     print("replicas: ", replicas)
     scale_deployment("teastore-webui", replicas)
     print("5 minute cool down...")
-    # time.sleep(300)
+    time.sleep(300)
     file_path = f'pod_model_results4_{replicas}.csv'
     run_test(file_path, replica_array) 
 
