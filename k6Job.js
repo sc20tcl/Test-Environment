@@ -1,11 +1,18 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
 
-export let options = {
-    vus: 1, 
-    duration: '60s', 
-    noVUConnectionReuse: false,
+export const options = {
+    scenarios: {
+        constant_request_rate: {
+            executor: 'constant-arrival-rate',
+            rate: 100,  
+            timeUnit: '1s',  
+            duration: '10m',  
+            preAllocatedVUs: 50, 
+            maxVUs: 200,  
+        }
+    }
 };
+
 
 const urls = [
     'http://4.158.24.106:8080/tools.descartes.teastore.webui/category?category=2&page=1',
@@ -17,9 +24,4 @@ const urls = [
 
 export default function () {
     http.get(urls[Math.floor(Math.random() * urls.length)]);
-    http.get(urls[Math.floor(Math.random() * urls.length)]);
-    http.get(urls[Math.floor(Math.random() * urls.length)]);
-    http.get(urls[Math.floor(Math.random() * urls.length)]);
-    http.get(urls[Math.floor(Math.random() * urls.length)]);
-    sleep(1);
 }
