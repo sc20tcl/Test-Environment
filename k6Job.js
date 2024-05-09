@@ -16,8 +16,7 @@ export const options = {
             maxVUs: parseInt(maxVUs),  
         }
     }
-}; }
-};
+}; 
 
 
 const urls = [
