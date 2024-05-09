@@ -44,6 +44,7 @@ def run_stage(stage):
     try:
         result = subprocess.run(test_command, check=True, shell=True, text=True, stdout=subprocess.PIPE)
         output = result.stdout
+        print(output)
         
         fail_match = re.search(r"http_req_failed[^:]*: (\d+\.\d+)%", output)
         reqs_match = re.search(r"http_reqs[^:]*: (\d+)", output)
