@@ -39,7 +39,7 @@ def query_prometheus(query):
 
 
 def run_stage(stage):
-    test_command = f"k6 run --vus {stage['vus']} --duration {stage['duration']} ./k6Job.js"
+    test_command = f"k6 run --vus {stage['vus']/5} --duration {stage['duration']} ./k6Job.js"
     print(f"Running stage: {stage}")
     try:
         result = subprocess.run(test_command, check=True, shell=True, text=True, stdout=subprocess.PIPE)
