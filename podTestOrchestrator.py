@@ -6,8 +6,8 @@ import re
 import pandas as pd
 
 prometheus_pod_query = 'avg(sum(rate(container_cpu_usage_seconds_total{namespace="default", pod=~"teastore-webui-.*", container!="POD", container!=""}[2m])) by (pod))' 
-prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.13:9100"}[1m])) * 100)'
-prometheus_url = 'http://172.165.91.160:9090'
+prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.4"}[1m])) * 100)'
+prometheus_url = 'http://4.158.172.106:9090'
 replica_count = 1
 
 stages = [
