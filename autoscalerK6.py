@@ -37,7 +37,6 @@ def get_pods():
 def run_stage(stage):
     """Run a k6 test stage."""
     test_command = f"k6 run -e RATE={int(stage['rate'])} -e DURATION={stage['duration']} -e PREALLOCATED_VUS={int(stage['preAllocatedVUs'])} -e MAX_VUS={int(stage['maxVUs'])} ./k6Job.js"
-    print(f"Running stage with {int(stage['vus']/3)} virtual users for {stage['duration']}.")
     try:
         result = subprocess.run(test_command, check=True, shell=True, text=True, stdout=subprocess.PIPE)
         output = result.stdout
