@@ -82,7 +82,7 @@ def run_stage(stage):
         return 'Test failed'
 
 
-data = pd.read_csv("../ValidateData.csv", parse_dates=['period'], index_col='period')
+data = pd.read_csv("ValidateData.csv", parse_dates=['period'], index_col='period')
 
 data_array = [data['1998-06-24 13:44:00': '1998-06-24 14:49:00'], data['1998-06-24 16:47:00': '1998-06-24 17:52:00'], data['1998-06-24 15:57:00': '1998-06-24 17:02:00'], data['1998-06-24 16:47:00': '1998-06-24 17:52:00']]
 
@@ -101,5 +101,5 @@ for i in range(len(data_array)):
             test_data.append([i, int(row['count']/60), pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
 
     results_df = pd.DataFrame(test_data, columns=['Test Number','QPM', 'Pod Count', 'avg Pod CPU Usage', 'Node CPU Usage', 'Fail Rate', "http reqs", "http req duration (90%)", "http req duration (95%)"])
-    results_df.to_csv(f'hpa_test_results{i}_2.csv', index=False)
+    results_df.to_csv(f'hpa_test_results{i}.csv', index=False)
     print(f"Test results saved to 'test_results{i}.csv'.")
