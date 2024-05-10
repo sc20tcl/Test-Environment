@@ -97,7 +97,7 @@ for i in range(len(data_array)):
         print(f"Scheduling test for {stage['vus']} virtual users at {period}.")
         pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95 = run_stage(stage)
         if warm_up > 4:
-            print([i, int(row['count']/60), pod_count, pod_cpu, node_cpu, failed_rate])
+            print([i, int(row['count']/60), pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
             test_data.append([i, int(row['count']/60), pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
 
     results_df = pd.DataFrame(test_data, columns=['Test Number','QPM', 'Pod Count', 'avg Pod CPU Usage', 'Node CPU Usage', 'Fail Rate', "http reqs", "http req duration (90%)", "http req duration (95%)"])
