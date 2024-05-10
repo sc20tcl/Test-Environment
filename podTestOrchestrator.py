@@ -124,7 +124,7 @@ for replicas in replica_array:
     scale_deployment("teastore-webui", replicas)
     print("5 minute cool down...")
     time.sleep(300)
-    file_path = f'pod_model_results5_{replicas}.csv'
+    file_path = f'application_profile_{replicas}.csv'
     run_test(file_path, replica_array) 
 
 
