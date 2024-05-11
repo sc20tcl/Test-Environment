@@ -6,7 +6,7 @@ import re
 import pandas as pd
 
 prometheus_pod_query = 'avg(sum(rate(container_cpu_usage_seconds_total{namespace="default", pod=~"teastore-webui-.*", container!="POD", container!=""}[2m])) by (pod))' 
-prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.4"}[1m])) * 100)'
+prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.4:9100"}[1m])) * 100)'
 prometheus_url = 'http://4.158.172.106:9090'
 replica_count = 1
 
@@ -70,9 +70,9 @@ def run_stage(stage):
             failed_rate = 6969
         print('Stage complete, querying Prometheus...')
         prometheus_pod_response = query_prometheus(prometheus_pod_query)
-        print(prometheus_pod_response)
+        print(prometheus_pod_response['data']['result'][0]['value'][1])
         prometheus_node_response = query_prometheus(prometheus_node_query)
-        print(prometheus_node_response)
+        print(prometheus_node_response['data']['result'][0]['value'][1])
         return prometheus_pod_response['data']['result'][0]['value'][1], prometheus_node_response['data']['result'][0]['value'][1], failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95
     except subprocess.CalledProcessError as e:
         print(f'Error running k6 stage: {e}')
