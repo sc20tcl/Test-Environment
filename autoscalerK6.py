@@ -81,7 +81,7 @@ def run_stage(stage):
         return 'Test failed'
 
 
-data = pd.read_csv("ValidateData.csv", parse_dates=['period'], index_col='period')
+data = pd.read_csv("ScaledVD.csv", parse_dates=['period'], index_col='period')
 
 data_array = [data['1998-06-24 13:44:00': '1998-06-24 14:49:00'], data['1998-06-24 16:47:00': '1998-06-24 17:52:00'], data['1998-06-24 15:57:00': '1998-06-24 17:02:00'], data['1998-06-24 16:47:00': '1998-06-24 17:52:00']]
 
