@@ -92,7 +92,7 @@ for i in range(len(data_array)):
     warm_up = 0
     for period, row in data_array[i].iterrows():
         warm_up += 1
-        stage = {'rate': row['count']/(60 * 3), 'duration': '60s', 'preAllocatedVUs': row['count']/(60 * 3), 'maxVUs': row['count']/(60 * 1.5)}  # Run each stage for 1 minute
+        stage = {'rate': row['count']/(60), 'duration': '60s', 'preAllocatedVUs': row['count']/(60), 'maxVUs': row['count']/(30)}  # Run each stage for 1 minute
         print(row['count']/(60 * 3))
         print(f"Scheduling test for {stage['rate']} qps users for 60s")
         pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95 = run_stage(stage)
