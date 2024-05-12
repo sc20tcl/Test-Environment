@@ -47,7 +47,7 @@ def run_stage(stage):
         duration_match90 = re.search(r"http_req_duration.*?p\(90\)=([^ ]*)", output)   
         if reqs_match:
             http_reqs = reqs_match.group(1)
-            # print(f"HTTP Requests: {http_reqs}")
+            print(f"HTTP Requests: {http_reqs}")
         if duration_match95:
             http_req_duration_p95 = duration_match95.group(1)
             # print(f"HTTP Requests duration (95%): {http_req_duration_p95}")
