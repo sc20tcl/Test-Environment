@@ -93,7 +93,7 @@ for i in range(len(data_array)):
     for period, row in data_array[i].iterrows():
         warm_up += 1
         stage = {'rate': int(row['count']/60), 'duration': '60s', 'preAllocatedVUs': int(row['count']/60), 'maxVUs': int(row['count']/30)}  # Run each stage for 1 minute
-        printint(row['count']/60) )
+        print(int(row['count']/60) )
         print(f"Scheduling test for {stage['rate']} qps users for 60s")
         pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95 = run_stage(stage)
         if warm_up > 4:
