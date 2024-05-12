@@ -93,12 +93,12 @@ for i in range(len(data_array)):
     for period, row in data_array[i].iterrows():
         warm_up += 1
         stage = {'rate': int(row['count']/60), 'duration': '60s', 'preAllocatedVUs': int(row['count']/60), 'maxVUs': int(row['count']/30)}  # Run each stage for 1 minute
-        print(row['count']/60 )
+        printint(row['count']/60) )
         print(f"Scheduling test for {stage['rate']} qps users for 60s")
         pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95 = run_stage(stage)
         if warm_up > 4:
-            print([i, int(row['count']/60), pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
-            test_data.append([i, int(row['count']/60), pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
+            print([i, stage['rate'], pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
+            test_data.append([i, stage['rate'], pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
 
     results_df = pd.DataFrame(test_data, columns=['Test Number','QPM', 'Pod Count', 'avg Pod CPU Usage', 'Node CPU Usage', 'Fail Rate', "http reqs", "http req duration (90%)", "http req duration (95%)"])
     results_df.to_csv(f'hpa_test_results{i}.csv', index=False)
