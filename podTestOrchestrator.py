@@ -39,7 +39,8 @@ def query_prometheus(query):
 
 
 def run_stage(stage):
-    test_command = f"k6 run -e RATE={int(stage['rate']/3)} -e DURATION={stage['duration']} -e PREALLOCATED_VUS={int(stage['preAllocatedVUs'])} -e MAX_VUS={int(stage['maxVUs'])} ./k6Job.js"    print(f"Running stage: {test_command}")
+    test_command = f"k6 run -e RATE={int(stage['rate']/3)} -e DURATION={stage['duration']} -e PREALLOCATED_VUS={int(stage['preAllocatedVUs'])} -e MAX_VUS={int(stage['maxVUs'])} ./k6Job.js"    
+    print(f"Running stage: {test_command}")
     try:
         result = subprocess.run(test_command, check=True, shell=True, text=True, stdout=subprocess.PIPE)
         output = result.stdout
