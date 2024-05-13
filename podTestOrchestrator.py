@@ -6,7 +6,7 @@ import re
 import pandas as pd
 
 prometheus_pod_query = 'avg(sum(rate(container_cpu_usage_seconds_total{namespace="default", pod=~"teastore-webui-.*", container!="POD", container!=""}[2m])) by (pod))' 
-prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.4:9100"}[1m])) * 100)'
+prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.4:9100"}[2m])) * 100)'
 prometheus_url = 'http://4.158.172.106:9090'
 replica_count = 1
 
@@ -14,13 +14,13 @@ stages = [
     {'rate': 100, 'duration': '300s', 'preAllocatedVUs': 100, 'maxVUs': 200},
     {'rate': 250, 'duration': '300s', 'preAllocatedVUs': 250, 'maxVUs': 500},
     {'rate': 500, 'duration': '300s', 'preAllocatedVUs': 500, 'maxVUs': 1000},
-    {'rate': 750, 'duration': '300s', 'preAllocatedVUs': 750, 'maxVUs': 1500},
-    {'rate': 1000, 'duration': '300s', 'preAllocatedVUs': 1000, 'maxVUs': 2000},
-    {'rate': 1250, 'duration': '300s', 'preAllocatedVUs': 1250, 'maxVUs': 2500},
-    {'rate': 1500, 'duration': '300s', 'preAllocatedVUs': 1500, 'maxVUs': 3000},
-    {'rate': 1750, 'duration': '300s', 'preAllocatedVUs': 1750, 'maxVUs': 3500},
-    {'rate': 2000, 'duration': '300s', 'preAllocatedVUs': 2000, 'maxVUs': 4000},
-    {'rate': 2250, 'duration': '300s', 'preAllocatedVUs': 2250, 'maxVUs': 4500}
+    {'rate': 750, 'duration': '300s', 'preAllocatedVUs': 750, 'maxVUs': 1500}
+    # {'rate': 1000, 'duration': '300s', 'preAllocatedVUs': 1000, 'maxVUs': 2000},
+    # {'rate': 1250, 'duration': '300s', 'preAllocatedVUs': 1250, 'maxVUs': 2500},
+    # {'rate': 1500, 'duration': '300s', 'preAllocatedVUs': 1500, 'maxVUs': 3000},
+    # {'rate': 1750, 'duration': '300s', 'preAllocatedVUs': 1750, 'maxVUs': 3500},
+    # {'rate': 2000, 'duration': '300s', 'preAllocatedVUs': 2000, 'maxVUs': 4000},
+    # {'rate': 2250, 'duration': '300s', 'preAllocatedVUs': 2250, 'maxVUs': 4500}
 ]
 
 def query_prometheus(query):
@@ -116,7 +116,7 @@ def run_test(filepath, replica_array):
 with open("directory-test.txt", 'w') as file:
             file.write("This is a test file created by Python.\n")
 
-replica_array = [1]
+replica_array = [1, 5, 9]
 
 for replicas in replica_array:
     print("replicas: ", replicas)
