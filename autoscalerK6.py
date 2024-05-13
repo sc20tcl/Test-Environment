@@ -83,8 +83,8 @@ def run_stage(stage):
 
 data = pd.read_csv("ScaledVD.csv", parse_dates=['period'], index_col='period')
 
-# data_array = [data['1998-06-24 13:44:00': '1998-06-24 14:49:00'], data['1998-06-24 16:47:00': '1998-06-24 17:52:00'], data['1998-06-24 15:57:00': '1998-06-24 17:02:00'], data['1998-06-24 10:24:00': '1998-06-24 11:24:00']]
-data_array = [data['1998-06-24 10:24:00': '1998-06-24 11:24:00']]
+# data_array = [data['1998-06-24 13:44:00': '1998-06-24 14:49:00'], data['1998-06-24 16:47:00': '1998-06-24 17:52:00'], data['1998-06-24 15:57:00': '1998-06-24 17:02:00'], data['1998-06-24 10:19:00': '1998-06-24 11:24:00']]
+data_array = [data['1998-06-24 10:14:00': '1998-06-24 11:24:00']]
 warm_up = 0
 
 for i in range(len(data_array)):
@@ -96,7 +96,7 @@ for i in range(len(data_array)):
         print(int(row['count']/60) )
         print(f"Scheduling test for {stage['rate']} qps users for 60s")
         pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95 = run_stage(stage)
-        if warm_up > 4:
+        if warm_up > 9:
             print([i, stage['rate'], pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
             test_data.append([i, stage['rate'], pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
 
