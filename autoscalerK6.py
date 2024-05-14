@@ -94,7 +94,7 @@ warm_up = 0
 for i in range(len(data_array)):
     test_data = []
     warm_up = 0
-    first_timestamp = data_range.index[0].strftime('%Y-%m-%d %H:%M:%S')
+    first_timestamp = data_array.index[0].strftime('%Y-%m-%d %H:%M:%S')
     data = {'timestamp': first_timestamp}
     response = requests.post(url, json=data)
     print(f"Set timestamp to: {first_timestamp}, Response: {response.text}")
