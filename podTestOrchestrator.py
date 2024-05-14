@@ -14,7 +14,7 @@ stages = [
     {'rate': 100, 'duration': '300s', 'preAllocatedVUs': 100, 'maxVUs': 200},
     {'rate': 250, 'duration': '300s', 'preAllocatedVUs': 250, 'maxVUs': 500},
     {'rate': 500, 'duration': '300s', 'preAllocatedVUs': 500, 'maxVUs': 1000},
-    {'rate': 750, 'duration': '300s', 'preAllocatedVUs': 750, 'maxVUs': 1500}
+    {'rate': 750, 'duration': '300s', 'preAllocatedVUs': 750, 'maxVUs': 1500},
     {'rate': 1000, 'duration': '300s', 'preAllocatedVUs': 1000, 'maxVUs': 2000},
     {'rate': 1250, 'duration': '300s', 'preAllocatedVUs': 1250, 'maxVUs': 2500},
     {'rate': 1500, 'duration': '300s', 'preAllocatedVUs': 1500, 'maxVUs': 3000},
