@@ -5,9 +5,9 @@ import pandas as pd
 import re
 
 # Prometheus configurations
-prometheus_url = 'http://4.158.172.106:9090'
+prometheus_url = 'http://4.250.143.94:9090'
 prometheus_pod_query = 'avg(sum(rate(container_cpu_usage_seconds_total{namespace="default", pod=~"teastore-webui-.*", container!="POD", container!=""}[2m])) by (pod))'
-prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.4:9100"}[1m])) * 100)'
+prometheus_node_query = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="10.224.0.5:9100"}[1m])) * 100)'
 pod_count_query = 'count(kube_pod_info{namespace="default", pod=~"teastore-webui-.*"}) by (namespace)'
 last_minute_query = 'sum(rate(http_requests_total[1m]))'
 
