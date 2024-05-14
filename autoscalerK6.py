@@ -87,8 +87,8 @@ url = 'http://20.33.62.78:5001/set'
 # Timestamp you want to set the counter to
 
 
-data_array = [data['1998-06-24 10:04:00': '1998-06-24 11:24:00'], data['1998-06-24 13:29:00': '1998-06-24 14:49:00'],  data['1998-06-24 15:42:00': '1998-06-24 17:02:00'], data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
-# data_array = [data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
+# data_array = [data['1998-06-24 10:04:00': '1998-06-24 11:24:00'], data['1998-06-24 13:29:00': '1998-06-24 14:49:00'],  data['1998-06-24 15:42:00': '1998-06-24 17:02:00'], data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
+data_array = [data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
 warm_up = 0
 
 for i in range(len(data_array)):
@@ -110,5 +110,5 @@ for i in range(len(data_array)):
             test_data.append([i, stage['rate'], pod_count, pod_cpu, node_cpu, failed_rate, http_reqs, http_req_duration_p90, http_req_duration_p95])
 
     results_df = pd.DataFrame(test_data, columns=['Test Number','QPM', 'Pod Count', 'avg Pod CPU Usage', 'Node CPU Usage', 'Fail Rate', "http reqs", "http req duration (90%)", "http req duration (95%)"])
-    results_df.to_csv(f'hpa_test_results{i}.csv', index=False)
-    print(f"Test results saved to 'test_results{i}.csv'.")
+    results_df.to_csv(f'predictive_test_results{i}.csv', index=False)
+    print(f"Test results saved to 'predictive_test_results{i}.csv'.")
