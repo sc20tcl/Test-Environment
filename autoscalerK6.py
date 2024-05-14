@@ -82,14 +82,23 @@ def run_stage(stage):
 
 
 data = pd.read_csv("ScaledVD.csv", parse_dates=['period'], index_col='period')
+url = 'http://20.33.62.78:5001/set'
 
-# data_array = [data['1998-06-24 10:04:00': '1998-06-24 11:24:00'], data['1998-06-24 13:29:00': '1998-06-24 14:49:00'],  data['1998-06-24 15:42:00': '1998-06-24 17:02:00'], data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
-data_array = [data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
+# Timestamp you want to set the counter to
+
+
+data_array = [data['1998-06-24 10:04:00': '1998-06-24 11:24:00'], data['1998-06-24 13:29:00': '1998-06-24 14:49:00'],  data['1998-06-24 15:42:00': '1998-06-24 17:02:00'], data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
+# data_array = [data['1998-06-24 19:51:00': '1998-06-24 21:11:00']]
 warm_up = 0
 
 for i in range(len(data_array)):
     test_data = []
     warm_up = 0
+    first_timestamp = data_range.index[0].strftime('%Y-%m-%d %H:%M:%S')
+    data = {'timestamp': first_timestamp}
+    response = requests.post(url, json=data)
+    print(f"Set timestamp to: {first_timestamp}, Response: {response.text}")
+    
     for period, row in data_array[i].iterrows():
         warm_up += 1
         stage = {'rate': int(row['count']/60), 'duration': '60s', 'preAllocatedVUs': int(row['count']/10), 'maxVUs': int(row['count']/2)}  # Run each stage for 1 minute
